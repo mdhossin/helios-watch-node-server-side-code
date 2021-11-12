@@ -32,7 +32,7 @@ async function run() {
       const result = await servicesCollection.find({}).toArray();
       res.send(result);
     });
-    // // create get api find a single product useing id show on the ui
+    // // create get api find a single product useing id show on the ui conneted to placeorder page 
     app.get("/products/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
@@ -40,7 +40,7 @@ async function run() {
       res.json(result);
     });
 
-    // // delete from manage all order page admin dashboard useing delete api
+    // // delete from manage products page admin dashboard useing delete api conected to admin dashboard manage product page
     app.delete("/delete/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
@@ -49,36 +49,14 @@ async function run() {
     });
 
     // orers collection database
-    // // add single product buy now button create api set on the database
+    // // add single product buy now button create api set on the database connected to place order page
     app.post("/placeorder", async (req, res) => {
       const newProduct = req.body;
       const result = await ordersCollection.insertOne(newProduct);
       res.json(result);
     });
-
-    // load the all orers to show the admin dashboard useing get api
-    app.get("/orders", async (req, res) => {
-      const result = await ordersCollection.find({}).toArray();
-      res.send(result);
-    });
-
-    // delete the every order from manage all order admin can delete create useing delete api
-    app.delete("/orders/:id", async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: ObjectId(id) };
-      const result = await ordersCollection.deleteOne(query);
-      res.json(result);
-    });
-
-    // // load buy now order on the ui api my order component
-    app.get("/order/:email", async (req, res) => {
-      const id = req.params.email;
-      const result = await ordersCollection.find({ email: id }).toArray();
-      res.send(result);
-    });
-
-    // // update order api
-    app.put("/orders/:id", async (req, res) => {
+     // // update order api connected to place order page
+     app.put("/orders/:id", async (req, res) => {
       const id = req.params.id;
       const updateStatus = req.body;
       const filter = { _id: ObjectId(id) };
@@ -96,7 +74,14 @@ async function run() {
       res.json(result);
     });
 
-    // // delete from manage order
+
+    // load the all orers to show the admin dashboard useing get api connected ot manage all order page
+    app.get("/orders", async (req, res) => {
+      const result = await ordersCollection.find({}).toArray();
+      res.send(result);
+    });
+
+    // delete the every order from manage all order admin can delete create useing delete api connected manage all order page
     app.delete("/orders/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
@@ -104,14 +89,22 @@ async function run() {
       res.json(result);
     });
 
-    // // delete from my orders create delete api
-    app.delete("/delete/:id", async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: ObjectId(id) };
-      const result = await ordersCollection.deleteOne(query);
-      res.json(result);
+    // // load buy now order on the ui api my order component connected ot my order page
+    app.get("/order/:email", async (req, res) => {
+      const id = req.params.email;
+      const result = await ordersCollection.find({ email: id }).toArray();
+      res.send(result);
     });
-
+      // // delete from my orders create delete api
+      app.delete("/orders/:id", async (req, res) => {
+        const id = req.params.id;
+        console.log('hitted from my order page', id);
+        const query = { _id: ObjectId(id) };
+        const result = await ordersCollection.deleteOne(query);
+        res.json(result);
+      });
+  
+  
     // reviews collection database
     // create new database add reviews one by one useing post api
     app.post("/reviews", async (req, res) => {
@@ -149,12 +142,10 @@ async function run() {
     // update users to set the role the user is admin on the database useing put api
     app.put("/users/admin", async (req, res) => {
       const user = req.body.email;
-      const requesterAccount = await usersCollection.findOne({ email: user });
       const filter = { email: user };
       const updateDoc = { $set: { role: "admin" } };
       const result = await usersCollection.updateOne(filter, updateDoc);
       res.json(result);
-      console.log(result);
     });
 
     // get the specific user verified with email useing get api
@@ -176,8 +167,8 @@ async function run() {
       res.send(result);
     });
 
-     // // get api read all blogs from database  load korsi
-     app.get("/blogs", async (req, res) => {
+    // // get api read all blogs from database  load korsi
+    app.get("/blogs", async (req, res) => {
       const result = await blogsCollection.find({}).toArray();
       res.send(result);
     });
