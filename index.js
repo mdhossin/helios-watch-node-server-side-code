@@ -26,6 +26,7 @@ async function run() {
     const ordersCollection = client.db("watchShop").collection("orders");
     const reviewsCollection = client.db("watchShop").collection("reviews");
     const usersCollection = client.db("watchShop").collection("users");
+    const blogsCollection = client.db("watchShop").collection("blogs");
 
     // servicesCollection /product database
 
@@ -191,6 +192,13 @@ async function run() {
       const service = req.body;
       const result = await servicesCollection.insertOne(service);
 
+      res.send(result);
+    });
+
+
+     // // get api read all blogs from database  load korsi
+     app.get("/blogs", async (req, res) => {
+      const result = await blogsCollection.find({}).toArray();
       res.send(result);
     });
   } finally {
