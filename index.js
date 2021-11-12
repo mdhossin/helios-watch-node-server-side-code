@@ -1,7 +1,5 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
-const { initializeApp } = require("firebase-admin/app");
-
 const ObjectId = require("mongodb").ObjectId;
 require("dotenv").config();
 const app = express();
@@ -17,7 +15,6 @@ const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-console.log(uri);
 
 async function run() {
   try {
@@ -29,7 +26,6 @@ async function run() {
     const blogsCollection = client.db("watchShop").collection("blogs");
 
     // servicesCollection /product database
-
     // // get api read data show on the ui
     // // get api read all product from database  load korsi
     app.get("/products", async (req, res) => {
@@ -52,10 +48,7 @@ async function run() {
       res.json(result);
     });
 
-
-
     // orers collection database
-
     // // add single product buy now button create api set on the database
     app.post("/placeorder", async (req, res) => {
       const newProduct = req.body;
@@ -120,7 +113,6 @@ async function run() {
     });
 
     // reviews collection database
-
     // create new database add reviews one by one useing post api
     app.post("/reviews", async (req, res) => {
       const reviews = req.body;
@@ -129,7 +121,6 @@ async function run() {
     });
 
     // load the all reviews data from database ueing get api
-
     app.get("/reviews", async (req, res) => {
       const result = await reviewsCollection.find({}).toArray();
       res.send(result);
@@ -144,7 +135,6 @@ async function run() {
     // update user useing put api upsert method use kore er kaj hocce user na thakle database e add korbe ar user thakle add korbe na add new user on database google sign in method
     app.put("/users", async (req, res) => {
       const user = req.body;
-      // console.log("put", user);
       const filter = { email: user.email };
       const options = { upsert: true };
       const updateDoc = { $set: user };
@@ -159,15 +149,7 @@ async function run() {
     // update users to set the role the user is admin on the database useing put api
     app.put("/users/admin", async (req, res) => {
       const user = req.body.email;
-      console.log(user, "user");
-      // const requester = req.decodedEmail;
-      // if (requester) {
-      //   const requesterAccount = await usersCollection.findOne({
-      //     email: requester,
-      //   });
       const requesterAccount = await usersCollection.findOne({ email: user });
-      console.log("hitted", requesterAccount);
-
       const filter = { email: user };
       const updateDoc = { $set: { role: "admin" } };
       const result = await usersCollection.updateOne(filter, updateDoc);
@@ -191,10 +173,8 @@ async function run() {
     app.post("/products", async (req, res) => {
       const service = req.body;
       const result = await servicesCollection.insertOne(service);
-
       res.send(result);
     });
-
 
      // // get api read all blogs from database  load korsi
      app.get("/blogs", async (req, res) => {
