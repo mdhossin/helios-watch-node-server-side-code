@@ -126,6 +126,7 @@ async function run() {
       res.json(result);
     });
     // update user useing put api upsert method use kore er kaj hocce user na thakle database e add korbe ar user thakle add korbe na add new user on database google sign in method
+    
     app.put("/users", async (req, res) => {
       const user = req.body;
       const filter = { email: user.email };
@@ -148,7 +149,7 @@ async function run() {
       res.json(result);
     });
 
-    // get the specific user verified with email useing get api
+    // get the specific user verified with email useing get api for find
     app.get("/users/:email", async (req, res) => {
       const email = req.params.email;
       const query = { email };
