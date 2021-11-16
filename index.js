@@ -149,7 +149,7 @@ async function run() {
       res.json(result);
     });
 
-    // get the specific user verified with email useing get api for find
+    // get the specific user verified with email useing get api for find good
     app.get("/users/:email", async (req, res) => {
       const email = req.params.email;
       const query = { email };
