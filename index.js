@@ -4,7 +4,7 @@ const ObjectId = require("mongodb").ObjectId;
 require("dotenv").config();
 const app = express();
 const cors = require("cors");
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 
 // middleware useing heer
 app.use(cors());
@@ -180,7 +180,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-  res.send("Hello backend how are you");
+  res.send("Hello backend how are you helios backend");
 });
 
 app.listen(port, () => {
